@@ -12,14 +12,14 @@ on:
         - info
         - warning
         - debug
-      tags:
-        description: 'Test scenario tags'
-        required: false
-        type: boolean
-      environment:
-        description: 'Environment to run tests against'
-        type: environment
+      tag:
+        description: 'Name of the release TAG'
         required: true
+        type: string
+      push_to_package:
+        required: true
+        type: boolean
+        default: false
 
 jobs:
   log-the-inputs:
@@ -27,9 +27,8 @@ jobs:
     steps:
       - run: |
           echo "Log level: $LEVEL"
-          echo "Tags: $TAGS"
-          echo "Environment: $ENVIRONMENT"
+          echo "Tags: $TAG"
         env:
           LEVEL: ${{ inputs.logLevel }}
-          TAGS: ${{ inputs.tags }}
-          ENVIRONMENT: ${{ inputs.environment }}
+          TAG: ${{ inputs.tag }}
+          PUSH: ${{ inputs.push_to_package}}
